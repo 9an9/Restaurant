@@ -3,12 +3,10 @@ package ingredients;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Tomato {
-    //싱글톤 객체를 static 변수로 선언
     private static Tomato tomato = new Tomato(10);
 
     private AtomicInteger amount = new AtomicInteger();
 
-    //외부에서 생성자 호출 막기
     private Tomato(int amount) {
         this.amount.set(amount);
     }

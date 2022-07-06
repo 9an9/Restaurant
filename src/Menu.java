@@ -3,7 +3,6 @@ import ingredients.Onion;
 import ingredients.Potato;
 import ingredients.Tomato;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -23,26 +22,18 @@ public class Menu {
     }
 
     public List<String> showMenu() {
-        //List<String> menu = new ArrayList<>();
-//        menuList.add("[stir-fry]potato-onion");
-//        menuList.add("[stir-fry]egg-onion");
-//        menuList.add("[stir-fry]egg-tomato");
-//        menuList.add("[dessert]tomato");
-//        menuList.add("[soup]potato");
-//        menuList.add("[soup]onion");
-
 
         if(Potato.getPotato().getAmount().get() == 0) {
-            menuList.stream().filter((a) -> !a.contains("potato"));
+            menuList.removeIf(a->a.contains("potato"));
         }
         if(Egg.getEgg().getAmount().get() == 0) {
-            menuList.stream().filter((a) -> !a.contains("egg"));
+            menuList.removeIf(a->a.contains("egg"));
         }
         if(Onion.getOnion().getAmount().get() == 0) {
-            menuList.stream().filter((a) -> !a.contains("onion"));
+            menuList.removeIf(a->a.contains("onion"));
         }
         if(Tomato.getTomato().getAmount().get() == 0) {
-            menuList.stream().filter((a) -> !a.contains("tomato"));
+            menuList.removeIf(a->a.contains("tomato"));
         }
 
         System.out.println("ㅜ-----------Menu-----------ㅜ");

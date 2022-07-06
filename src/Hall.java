@@ -14,9 +14,16 @@ public class Hall {
 
         BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
 
-        Queue<String> orderList = new LinkedList<>(); //왜 LinkedList로 했는지
+        Queue<String> orderList = new LinkedList<>();
 
         List<String> order = new ArrayList<>();
+
+        System.out.println("open!");
+        System.out.println(
+                "** 오늘의 재료 : 감자(" + Potato.getPotato().getAmount()
+                        + ") / 달걀(" + Egg.getEgg().getAmount()
+                        + ") / 양파(" + Onion.getOnion().getAmount()
+                        + ") / 토마토(" + Tomato.getTomato().getAmount() + ") **");
 
         Thread thread = new Thread(() -> {
             try {
@@ -54,16 +61,40 @@ public class Hall {
                         iter.remove();
                     }else {
                         if(s.contains("potato")) {
-                            Potato.getPotato().setAmount(1);
+                            if(Potato.getPotato().getAmount().get() < 1) {
+                                System.out.println("Ann : 감자 없어요!");
+                                iter.remove();
+                                continue;
+                            }else {
+                                Potato.getPotato().setAmount(1);
+                            }
                         }
                         if(s.contains("egg")) {
-                            Egg.getEgg().setAmount(1);
+                            if(Egg.getEgg().getAmount().get() < 1) {
+                                System.out.println("Ann : 달걀 없어요!");
+                                iter.remove();
+                                continue;
+                            }else {
+                                Egg.getEgg().setAmount(1);
+                            }
                         }
                         if(s.contains("onion")) {
-                            Onion.getOnion().setAmount(1);
+                            if(Onion.getOnion().getAmount().get() < 1) {
+                                System.out.println("Ann : 양파 없어요!");
+                                iter.remove();
+                                continue;
+                            }else {
+                                Onion.getOnion().setAmount(1);
+                            }
                         }
                         if(s.contains("tomato")) {
-                            Tomato.getTomato().setAmount(1);
+                            if(Tomato.getTomato().getAmount().get() < 1) {
+                                System.out.println("Ann : 토마토 없어요!");
+                                iter.remove();
+                                continue;
+                            }else {
+                                Tomato.getTomato().setAmount(1);
+                            }
                         }
                     }
                 }
@@ -80,6 +111,7 @@ public class Hall {
                                 + ") / 토마토(" + Tomato.getTomato().getAmount() + ")");
             }
         }
+        System.out.println("영업종료! 재료가 모두 소진되었습니다^^");
 
     }
 }
