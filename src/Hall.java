@@ -20,12 +20,9 @@ public class Hall {
 
         Thread thread = new Thread(() -> {
             try {
-                while(true) {
-                    if(Menu.getMenu().getMenuList().size() == 0) {
-                        break;
-                    }
-                    while(orderList.size() > 0) {
-                        synchronized (orderList) {
+                while(Menu.getMenu().getMenuList().size() > 0) {
+                    synchronized (orderList) {
+                        while(orderList.size() > 0) {
                             Manager.getManager().takeOrder(orderList.poll());
                         }
                     }
@@ -37,10 +34,7 @@ public class Hall {
 
         thread.start();
 
-        while(true) {
-            if(Menu.getMenu().getMenuList().size() == 0) {
-                break;
-            }
+        while(Menu.getMenu().getMenuList().size() > 0) {
             while (bf.readLine().equals("주문할게요!")) {
                 Menu.getMenu().showMenu();
                 System.out.println("Ann : 주문하시겠습니까?");

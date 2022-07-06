@@ -14,15 +14,18 @@ public class Manager {
     }
 
     public void takeOrder(String menu) throws InterruptedException {
-        Chef chef = Chef.getChef(checkChefStatus());
+        String name = checkChefStatus();
+        if(name != null) {
+            Chef chef = Chef.getChef(name);
 
-        new Thread(() -> {
-            try {
-                chef.cook(menu);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }).start();
+            new Thread(() -> {
+                try {
+                    chef.cook(menu);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }).start();
+        }
     }
 
     public String checkChefStatus() throws InterruptedException {
@@ -32,12 +35,13 @@ public class Manager {
 
         for(String item : status.keySet()) {
             if(status.get(item).get()) {
+                Chef.getChef(item).setStatus(false);
                 return item;
             }
         }
         System.out.println("모든 셰프가 요리중입니다...");
 
-        TimeUnit.SECONDS.sleep(3);
+        TimeUnit.SECONDS.sleep(5);
 
         checkChefStatus();
 

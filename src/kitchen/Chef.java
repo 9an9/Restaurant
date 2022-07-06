@@ -28,9 +28,9 @@ public class Chef {
 
     public void cook(String menu) throws InterruptedException {
 
-        this.status.set(false);
-
-        TimeUnit.SECONDS.sleep(5);
+        //this.status.set(false);
+        System.out.println(this.name + "가 " + menu + "를 만들고 있습니다.");
+        TimeUnit.SECONDS.sleep(3);
 
         System.out.println(this.name + " : 주문하신 " + menu + " 나왔습니다.");
 
@@ -41,4 +41,7 @@ public class Chef {
         return status;
     }
 
+    public void setStatus(boolean status) {
+        this.status.set(status);
+    }
 }

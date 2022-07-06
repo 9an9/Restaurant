@@ -6,12 +6,13 @@ import ingredients.Tomato;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Menu {
     private static Menu menu = new Menu();
 
-    private List<String> menuList = Arrays.asList("[stir-fry]potato-onion",
-            "[stir-fry]egg-onion","[stir-fry]egg-tomato","[dessert]tomato","[soup]potato","[soup]onion");
+    private CopyOnWriteArrayList<String> menuList = new CopyOnWriteArrayList<>(Arrays.asList("[stir-fry]potato-onion",
+            "[stir-fry]egg-onion","[stir-fry]egg-tomato","[dessert]tomato","[soup]potato","[soup]onion"));
 
     public static Menu getMenu() {
         return menu;
@@ -31,16 +32,16 @@ public class Menu {
 //        menuList.add("[soup]onion");
 
 
-        if(Potato.getPotato().getAmount() == 0) {
+        if(Potato.getPotato().getAmount().get() == 0) {
             menuList.stream().filter((a) -> !a.contains("potato"));
         }
-        if(Egg.getEgg().getAmount() == 0) {
+        if(Egg.getEgg().getAmount().get() == 0) {
             menuList.stream().filter((a) -> !a.contains("egg"));
         }
-        if(Onion.getOnion().getAmount() == 0) {
+        if(Onion.getOnion().getAmount().get() == 0) {
             menuList.stream().filter((a) -> !a.contains("onion"));
         }
-        if(Tomato.getTomato().getAmount() == 0) {
+        if(Tomato.getTomato().getAmount().get() == 0) {
             menuList.stream().filter((a) -> !a.contains("tomato"));
         }
 
