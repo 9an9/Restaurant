@@ -3,6 +3,7 @@ import kitchen.Chef;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Manager {
 
@@ -15,16 +16,22 @@ public class Manager {
     public void takeOrder(String menu) throws InterruptedException {
         Chef chef = Chef.getChef(checkChefStatus());
 
-        chef.cook(menu);
+        new Thread(() -> {
+            try {
+                chef.cook(menu);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
     }
 
     public String checkChefStatus() throws InterruptedException {
-        Map<String, String> status = new HashMap<>();
+        Map<String, AtomicBoolean> status = new HashMap<>();
         status.put("tom", Chef.getChef("tom").getStatus());
         status.put("lee", Chef.getChef("lee").getStatus());
 
         for(String item : status.keySet()) {
-            if(status.get(item).equals("Y")) {
+            if(status.get(item).get()) {
                 return item;
             }
         }

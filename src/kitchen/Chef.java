@@ -6,21 +6,21 @@ import ingredients.Potato;
 import ingredients.Tomato;
 
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Chef {
     private String name;
-    private String status = "N";
+    private AtomicBoolean status;
 
-    private static Chef tom = new Chef("Tom", "Y");
-    private static Chef lee = new Chef("Lee", "Y");
+    private static Chef tom = new Chef("Tom", true);
+    private static Chef lee = new Chef("Lee", true);
 
-    private Chef(String name, String status) {
+    private Chef(String name, boolean status) {
         this.name = name;
-        this.status = status;
+        this.status = new AtomicBoolean(status);
     }
 
     public static Chef getChef(String name) {
-        Chef chef = new Chef("", "");
         if(name.equals("tom")) return tom;
         if(name.equals("lee")) return lee;
         return null;
@@ -28,29 +28,16 @@ public class Chef {
 
     public void cook(String menu) throws InterruptedException {
 
-        this.status = "N";
+        this.status.set(false);
 
-        if(menu.contains("potato")) {
-            Potato.getPotato().setAmount(1);
-        }
-        if(menu.contains("egg")) {
-            Egg.getEgg().setAmount(1);
-        }
-        if(menu.contains("onion")) {
-            Onion.getOnion().setAmount(1);
-        }
-        if(menu.contains("tomato")) {
-            Tomato.getTomato().setAmount(1);
-        }
+        TimeUnit.SECONDS.sleep(5);
 
-        TimeUnit.SECONDS.sleep(3);
+        System.out.println(this.name + " : 주문하신 " + menu + " 나왔습니다.");
 
-        System.out.println("주문하신 " + menu + " 나왔습니다.");
-
-        this.status = "Y";
+        this.status.set(true);
     }
 
-    public String getStatus() {
+    public AtomicBoolean getStatus() {
         return status;
     }
 

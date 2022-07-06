@@ -20,6 +20,10 @@ public class Egg {
     }
 
     public void setAmount(int n) {
-        this.amount = amount-n;
+        if(amount-n <0) {
+            System.out.println("주방 : 달걀 없어요!!");
+        }else {
+            this.amount = amount-n;
+        }
     }
 }

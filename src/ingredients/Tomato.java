@@ -20,6 +20,10 @@ public class Tomato {
     }
 
     public void setAmount(int n) {
-        this.amount = amount-n;
+        if(amount-n <0) {
+            System.out.println("주방 : 토마토 없어요!!");
+        }else {
+            this.amount = amount-n;
+        }
     }
 }
