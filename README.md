@@ -47,6 +47,7 @@
 - 모든 스레드에서 공유.
 - showMenu() 메서드로 메뉴판 구성 및 출력.
 
+![image](https://user-images.githubusercontent.com/87376840/177657507-9ad7ddd0-0b99-4ef5-b5d3-7313119351b9.png)
 
 
 #### [추가 계획]
