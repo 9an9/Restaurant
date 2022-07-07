@@ -1,9 +1,9 @@
-package ingredients;
+package kitchen.ingredients;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Potato {
-    private static Potato potato = new Potato(10);
+    private static Potato potato = null;
 
     private AtomicInteger amount = new AtomicInteger();
 
@@ -12,6 +12,9 @@ public class Potato {
     }
 
     public static Potato getPotato() {
+        if(potato == null) {
+            potato = new Potato(10);
+        }
         return potato;
     }
 

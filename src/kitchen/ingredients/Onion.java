@@ -1,18 +1,21 @@
-package ingredients;
+package kitchen.ingredients;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class Egg {
-    private static Egg egg = new Egg(10);
+public class Onion {
+    private static Onion onion = null;
 
     private AtomicInteger amount = new AtomicInteger();
 
-    private Egg(int amount) {
+    private Onion(int amount) {
         this.amount.set(amount);
     }
 
-    public static Egg getEgg() {
-        return egg;
+    public static Onion getOnion() {
+        if(onion == null) {
+            onion = new Onion(10);
+        }
+        return onion;
     }
 
     public AtomicInteger getAmount() {
@@ -21,7 +24,7 @@ public class Egg {
 
     public void setAmount(int n) {
         if(amount.get()-n <0) {
-            System.out.println("주방 : 달걀 없어요!!");
+            System.out.println("주방 : 양파 없어요!!");
         }else {
             this.amount.set(amount.get()-n);
         }
