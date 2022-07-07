@@ -51,6 +51,6 @@
 
 |업로드 날짜|내용|피드백|
 |------------|---|---|
-|2022.07.06 &nbsp;&nbsp;|multithread와 singleton 패턴을 적용하여 식당 구현.<br>식재료 4개/셰프2명/홀매니저1명 세팅.|singleton 패턴을 적용할 때 인스턴스를 초기에 선언시켜놓는 것보다는 사용 시점에 생성하는 방향으로 수정.<br> (singleton pattern의 장점은 **생성시점을 조절할 수 있다**는 것!) <br> Chef 클래스 분리. |
+|2022.07.06 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|- multithread와 singleton 패턴을 적용하여 식당 구현.<br>- 식재료 4개/셰프2명/홀매니저1명 세팅.<br>- 식재료의 남은 갯수와 셰프의 상태 필드를 수정할 수 있게 만들고 스레드 동기화 문제 해결을 위해 Atomic Wrapper, synchronized 사용|- singleton 패턴을 적용할 때 인스턴스를 초기에 선언시켜놓는 것보다는 사용 시점에 생성하는 방향으로 수정.<br> (singleton pattern의 장점은 **생성시점을 조절할 수 있다**는 것!)| 
 
 
