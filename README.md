@@ -32,7 +32,7 @@
 - Singleton으로 구현.(?)
 - 두 개의 인스턴스를 생성해놓고 식당에 두 명의 셰프만 존재하게 함.(추후 Chef 클래스를 상속받는 각각의 셰프로 구현할 예정)
 - 모든 스레드에서 공유.
-- 동기화 문제 해결을 위해 status를 AtomicBolean으로 선언.
+- 동기화 문제 해결을 위해 status를 AtomicBoolean으로 선언.
 - cook() 메서드로 3초간 요리함.
 
 #### ingredients
@@ -49,7 +49,8 @@
 
 ![image](https://user-images.githubusercontent.com/87376840/177657507-9ad7ddd0-0b99-4ef5-b5d3-7313119351b9.png)
 
+|업로드 날짜|내용|피드백|
+|------------|---|---|
+|2022.07.06 &nbsp;&nbsp;|multithread와 singleton 패턴을 적용하여 식당 구현.<br>식재료 4개/셰프2명/홀매니저1명 세팅.|singleton 패턴을 적용할 때 인스턴스를 초기에 선언시켜놓는 것보다는 사용 시점에 생성하는 방향으로 수정.<br> (singleton pattern의 장점은 **생성시점을 조절할 수 있다**는 것!) <br> Chef 클래스 분리. |
 
-#### [추가 계획]
 
-- 갯수가 제한된 테이블 만들기
