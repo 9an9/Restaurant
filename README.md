@@ -11,18 +11,18 @@
 |   	 +-- Tomato.java
 |   +-- kitchen
 |        +-- Chef.java
-|   +-- Hall.java
-|   +-- Manager.java
+|   +-- Main.java
+|   +-- hall.Manager.java
 |   +-- Menu.java
 ```
 
 
 
-#### Hall
+#### Main
 
 - BufferedReader로 주문을 받고, 주문을 넣는 Thread 실행.
 
-#### Manager
+#### hall.Manager
 
 - takeOrder() 메서드로 셰프의 상태를 체크하고 준비된 상태의 셰프에게 요리를 시킴.
 - Singleton으로 구현.

@@ -13,7 +13,7 @@ public class Tomato {
 
     public static Tomato getTomato() {
         if(tomato == null) {
-            tomato = new Tomato(10);
+            tomato = new Tomato(5);
         }
         return tomato;
     }

@@ -13,7 +13,7 @@ public class Onion {
 
     public static Onion getOnion() {
         if(onion == null) {
-            onion = new Onion(10);
+            onion = new Onion(5);
         }
         return onion;
     }

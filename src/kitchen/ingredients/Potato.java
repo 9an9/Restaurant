@@ -13,7 +13,7 @@ public class Potato {
 
     public static Potato getPotato() {
         if(potato == null) {
-            potato = new Potato(10);
+            potato = new Potato(5);
         }
         return potato;
     }

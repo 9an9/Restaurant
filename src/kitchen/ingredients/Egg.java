@@ -13,7 +13,7 @@ public class Egg {
 
     public static Egg getEgg() {
         if(egg == null) {
-            egg = new Egg(10);
+            egg = new Egg(5);
         }
         return egg;
     }
