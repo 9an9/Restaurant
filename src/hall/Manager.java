@@ -34,9 +34,6 @@ public class Manager {
     public void takeOrder(Hall hall, Table table) throws InterruptedException {
 
         List<Dish> dishes = table.getOrder();
-        dishes.sort((a,b) -> {
-            return a.getPriority() - b.getPriority();
-        });
 
         for(int i=0; i< dishes.size(); i++) {
             Chef chef = checkChefStatus(hall.getChefs());

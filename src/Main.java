@@ -100,6 +100,7 @@ public class Main {
                             System.out.println("- " + item.getName());
                         }
                         System.out.println("나왔습니다!");
+                        prTable.getOrder().clear();
                         prTable.setStatus(true);
 
                     }
@@ -113,7 +114,7 @@ public class Main {
 
         // 2-3. 주문 받기
         while(hall.getMenuList().size() > 0) {
-            while (bf.readLine().equals("주문할게요!")) {
+            if (bf.readLine().equals("주문할게요!")) {
                 table = hall.getManager().assignTable(hall.getTables());
                 hall.getManager().showMenu(hall);
                 System.out.println("Ann : 주문하시겠습니까?");
@@ -122,7 +123,7 @@ public class Main {
                     if(str.equals(".")) {
                         break;
                     }
-                    if(!str.isEmpty()) {
+                    if(!str.isEmpty() && hall.getMenuList().get(str) != null) {
                         order.add(hall.getMenuList().get(str));
                     }
                 }
@@ -172,7 +173,9 @@ public class Main {
                         }
                     }
                 }
-
+                order.sort((a,b) -> {
+                    return a.getPriority() - b.getPriority();
+                });
                 table.getOrder().addAll(order);
                 hall.getTableOrder().put(table);
                 synchronized (order) {
@@ -186,6 +189,7 @@ public class Main {
                                 + ") / 달걀(" + Egg.getEgg().getAmount()
                                 + ") / 양파(" + Onion.getOnion().getAmount()
                                 + ") / 토마토(" + Tomato.getTomato().getAmount() + ")");
+                manager.checkMenu(hall);
             }
         }
         System.out.println("영업종료! 재료가 모두 소진되었습니다^^");
