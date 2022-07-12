@@ -10,6 +10,6 @@ public class Dessert extends Dish{
 
     @Override
     public void cookDish() throws InterruptedException {
-        TimeUnit.SECONDS.sleep(4);
+        TimeUnit.SECONDS.sleep(2);
     }
 }

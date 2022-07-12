@@ -14,7 +14,7 @@ public class Chef {
         this.status = new AtomicBoolean(status);
     }
 
-    public String cook(Dish dish) throws InterruptedException {
+    public Dish cook(Dish dish) throws InterruptedException {
 
         DishFactory factory = new DishFactory();
 
@@ -24,7 +24,7 @@ public class Chef {
 
         this.status.set(true);
 
-        return dish.getName();
+        return dish;
     }
 
     public AtomicBoolean getStatus() {

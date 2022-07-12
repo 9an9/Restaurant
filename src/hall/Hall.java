@@ -2,11 +2,11 @@ package hall;
 
 import kitchen.Chef;
 import kitchen.dish.Dish;
-import kitchen.dish.Menu;
 
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.*;
 
 public class Hall {
 
@@ -18,9 +18,11 @@ public class Hall {
 
     private ConcurrentHashMap<String, Dish> menuList;
 
-    private CopyOnWriteArrayList<String> doneDish = new CopyOnWriteArrayList<>();
+    private LinkedBlockingQueue<Dish> doneDish = new LinkedBlockingQueue<>();
 
-    private LinkedBlockingQueue<Table> tableOrder = new LinkedBlockingQueue<>(4);
+    private CopyOnWriteArrayList<Integer> tablePriority = new CopyOnWriteArrayList<>();
+
+    private ConcurrentHashMap<Integer, List<String>> tableOrder = new ConcurrentHashMap<>();
 
     public Hall(Manager manager, Chef[] chefs, Table[] tables, ConcurrentHashMap<String, Dish> menuList) {
         this.manager = manager;
@@ -45,11 +47,17 @@ public class Hall {
         return menuList;
     }
 
-    public CopyOnWriteArrayList<String> getDoneDish() {
+    public LinkedBlockingQueue<Dish> getDoneDish() {
         return doneDish;
     }
 
-    public LinkedBlockingQueue<Table> getTableOrder() {
+    public ConcurrentHashMap<Integer, List<String>> getTableOrder() {
         return tableOrder;
     }
+
+    public CopyOnWriteArrayList<Integer> getTablePriority() {
+        return tablePriority;
+    }
+
+
 }

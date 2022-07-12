@@ -10,6 +10,7 @@ import kitchen.ingredients.Potato;
 import kitchen.ingredients.Tomato;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Manager {
@@ -38,11 +39,14 @@ public class Manager {
         for(int i=0; i< dishes.size(); i++) {
             Chef chef = checkChefStatus(hall.getChefs());
             Dish dish = dishes.get(i);
+            dish.setTableNum(table.getNum());
             if(chef != null) {
+                if(i>0) {
+                    TimeUnit.SECONDS.sleep(3);
+                }
                 Thread thread = new Thread(() -> {
                     try {
-                        hall.getDoneDish().add(chef.cook(dish));
-
+                        hall.getDoneDish().offer(chef.cook(dish));
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
@@ -72,8 +76,8 @@ public class Manager {
         checkMenu(hall);
 
         System.out.println("ㅜ-----------Menu-----------ㅜ");
-        for(Dish item : hall.getMenuList().values()) {
-            System.out.println("| * " + item.getName());
+        for(String item : hall.getMenuList().keySet()) {
+            System.out.println("| * " + item);
         }
 
         if(hall.getMenuList().size() == 0) {

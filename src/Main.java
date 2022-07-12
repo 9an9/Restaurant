@@ -24,7 +24,7 @@ public class Main {
 
         BufferedReader bf = new BufferedReader(new InputStreamReader(System.in)); // 주문입력
 
-        Queue<Table> orderList = new LinkedList<>(); // 받은 주문들
+        Queue<Table> orderList = new LinkedList<>(); // 받은 주문들(주방에 요청하는 용도)
 
         List<Dish> order = new ArrayList<>(); // 테이블별 주문서
 
@@ -45,12 +45,21 @@ public class Main {
         }
         // 1-5. Menu
         ConcurrentHashMap<String, Dish> menuList = new ConcurrentHashMap<>();
-        menuList.put("potato-onion", new Dish("STIR", "potato-onion", Arrays.asList("potato", "onion"), 2 ));
-        menuList.put("onion", new Dish("SOUP", "onion", Arrays.asList("onion"), 2 ));
-        menuList.put("tomato", new Dish("DESSERT", "tomato", Arrays.asList("tomato"), 2 ));
+        menuList.put("[STIR]potato-onion", new Dish("STIR", "[STIR]potato-onion", Arrays.asList("potato", "onion"), 2 ));
+        menuList.put("[STIR]egg-onion", new Dish("STIR", "[STIR]egg-onion", Arrays.asList("potato", "onion"), 2 ));
+        menuList.put("[STIR]egg-tomato", new Dish("STIR", "[STIR]egg-tomato", Arrays.asList("potato", "onion"), 2 ));
+        menuList.put("[SOUP]egg", new Dish("SOUP", "[SOUP]egg", Arrays.asList("egg"), 1 ));
+        menuList.put("[SOUP]onion", new Dish("SOUP", "[SOUP]onion", Arrays.asList("onion"), 1 ));
+        menuList.put("[SOUP]tomato", new Dish("SOUP", "[SOUP]tomato", Arrays.asList("tomato"), 1 ));
+        menuList.put("[SOUP]potato", new Dish("SOUP", "[SOUP]potato", Arrays.asList("tomato"), 1 ));
+        menuList.put("[DESSERT]tomato", new Dish("DESSERT", "[DESSERT]tomato", Arrays.asList("tomato"), 3 ));
 
         Hall hall = new Hall(manager,chefs, tables,menuList);
 
+        //테이블별 주문 초기화
+        for(int i=1; i<5; i++) {
+            hall.getTableOrder().put(i, new ArrayList<>());
+        }
 
         // 2. 영업 시작
         System.out.println(hall.getManager().getName() + " : 출근하기 싫다....!");
@@ -71,6 +80,7 @@ public class Main {
                         }
                     }
                 }
+                System.out.println("셰프님 홀 마감했습니다!");
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -83,26 +93,24 @@ public class Main {
         Thread kitchenDish = new Thread(() -> {
             try {
                 while(true) {
-                    while(hall.getTableOrder().size() > 0) {
-                        Table prTable = hall.getTableOrder().take();
-                        List<String> list = prTable.getOrder().stream().map((a) -> a.getName()).collect(Collectors.toList());
-                        while(list.size()>0) {
-                            for(int i=0; i<hall.getDoneDish().size(); i++) {
-                                if (list.contains(hall.getDoneDish().get(i))) {
-                                    list.remove(hall.getDoneDish().get(i));
-                                    hall.getDoneDish().remove(i);
-                                    break;
-                                }
+                    if(hall.getDoneDish().size()>0) {
+                        Dish dish = hall.getDoneDish().take();
+                        for(Integer item : hall.getTablePriority()) {
+                            if(hall.getTableOrder().get(item).contains(dish.getName())) {
+                                System.out.println(item + "번 테이블 음식 " + dish.getName() + "나왔습니다.");
+                                hall.getTableOrder().get(item).remove(dish.getName());
+                            }
+                            if(hall.getTableOrder().get(item).size()<=0) {
+                                System.out.println(item + "번 테이블 음식 다 나왔습니다. 맛있게 드세요!");
+                                hall.getTablePriority().remove(item);
+                                hall.getTables()[item].setStatus(true);
+                                hall.getTables()[item].getOrder().clear();
                             }
                         }
-                        System.out.println(prTable.getNum() + "번 테이블 음식 ");
-                        for(Dish item : prTable.getOrder()) {
-                            System.out.println("- " + item.getName());
-                        }
-                        System.out.println("나왔습니다!");
-                        prTable.getOrder().clear();
-                        prTable.setStatus(true);
-
+                    }
+                    if(hall.getTableOrder().size()<=0) {
+                        System.out.println("영업 끝! 문닫습니다!!!");
+                        break;
                     }
                 }
             } catch (Exception e) {
@@ -177,22 +185,38 @@ public class Main {
                     return a.getPriority() - b.getPriority();
                 });
                 table.getOrder().addAll(order);
-                hall.getTableOrder().put(table);
+//                hall.getTableOrder().put(table);
+                hall.getTablePriority().add(table.getNum());
+                hall.getTableOrder().get(table.getNum()).addAll(order.stream().map((a) -> a.getName()).collect(Collectors.toList()));
                 synchronized (order) {
                     orderList.add(table);
                 }
-                order.clear();
 
-                System.out.println("Ann : 잠시만 기다려주세요...");
-                System.out.println(
-                        "감자(" + Potato.getPotato().getAmount()
-                                + ") / 달걀(" + Egg.getEgg().getAmount()
-                                + ") / 양파(" + Onion.getOnion().getAmount()
-                                + ") / 토마토(" + Tomato.getTomato().getAmount() + ")");
-                manager.checkMenu(hall);
+                if(order.size()<=0) {
+                    table.setStatus(true);
+                    System.out.println("메뉴 다시 결정하시고 불러주세요!");
+                }else {
+                    System.out.println("Ann : 잠시만 기다려주세요...");
+                    System.out.println("ㅜ=================주문서================ㅜ");
+                    for(int item : hall.getTableOrder().keySet()) {
+                        System.out.print(item + "번 테이블 : ");
+                        for(String str : hall.getTableOrder().get(item)) {
+                            System.out.print(str + "/ ");
+                        }
+                        System.out.println();
+                        System.out.println("---------------------------------");
+                    }
+                    System.out.println(
+                            "감자(" + Potato.getPotato().getAmount()
+                                    + ") / 달걀(" + Egg.getEgg().getAmount()
+                                    + ") / 양파(" + Onion.getOnion().getAmount()
+                                    + ") / 토마토(" + Tomato.getTomato().getAmount() + ")");
+                    manager.checkMenu(hall);
+                    order.clear();
+                }
             }
         }
-        System.out.println("영업종료! 재료가 모두 소진되었습니다^^");
+        System.out.println("재료가 모두 소진되었습니다^^");
 
     }
 }
