@@ -10,17 +10,16 @@
 |   	 +-- Table.java
 |   +-- kitchen
 |   	 +-- dish
-|        +-- DishFactory.java
-|        +-- Dish.java
-|        +-- Dessert.java
-|        +-- Stir_Fry.java
-|        +-- Soup.java
-|        +-- Menu.java
+|             +-- DishFactory.java
+|             +-- Dish.java
+|             +-- Dessert.java
+|             +-- Stir_Fry.java
+|             +-- Soup.java
 |   	 +-- ingredients
-|        +-- Egg.java
-|        +-- Onion.java
-|        +-- Potato.java
-|        +-- Tomato.java
+|             +-- Egg.java
+|             +-- Onion.java
+|             +-- Potato.java
+|             +-- Tomato.java
 |   	 +-- Chef.java
 |   +-- Main.java
 ```
