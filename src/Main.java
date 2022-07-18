@@ -3,7 +3,6 @@ import hall.Manager;
 import hall.Table;
 import kitchen.Chef;
 import kitchen.dish.Dish;
-import kitchen.dish.Menu;
 import kitchen.ingredients.Egg;
 import kitchen.ingredients.Onion;
 import kitchen.ingredients.Potato;
@@ -14,8 +13,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.stream.Collectors;
 
 public class Main {

@@ -2,8 +2,6 @@ package hall;
 
 import kitchen.Chef;
 import kitchen.dish.Dish;
-import kitchen.dish.DishFactory;
-import kitchen.dish.Menu;
 import kitchen.ingredients.Egg;
 import kitchen.ingredients.Onion;
 import kitchen.ingredients.Potato;
@@ -11,7 +9,6 @@ import kitchen.ingredients.Tomato;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Manager {
 

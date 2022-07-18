@@ -1,9 +1,5 @@
 package kitchen.dish;
 
-import java.util.Arrays;
-
-import static kitchen.dish.Menu.STIR1;
-
 public class DishFactory {
 
     public Dish dish(Dish dish){
